@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import api from "../services/api";
+const BASE_URL = import.meta.env.VITE_API_URL;
 import { useNavigate, Link } from "react-router-dom";
+import axios from "axios";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ export default function Login() {
     setError("");
 
     try {
-      const { data } = await api.post("/user/login", form);
+      const { data } = await axios.post(`${BASE_URL}/user/login`, form);
 
       // Store token
       localStorage.setItem("token", data.token);

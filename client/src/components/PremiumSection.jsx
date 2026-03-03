@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import api from "../services/api";
+const BASE_URL = import.meta.env.VITE_API_URL;
 import Leaderboard from "./Leaderboard";
 import DownloadList from "./DownloadList";
+import axios from "axios";
 
 export default function PremiumSection() {
   const [isPremium, setIsPremium] = useState(false);
@@ -34,7 +35,7 @@ export default function PremiumSection() {
       const token = localStorage.getItem("token");
 
       // 1️⃣ Create order
-      const { data } = await api.get("/purchase/premiummembership", {
+      const { data } = await axios.get(`${BASE_URL}/purchase/premiummembership`, {
         headers: { Authorization: token },
       });
 
@@ -43,8 +44,8 @@ export default function PremiumSection() {
         order_id: data.order.id,
         handler: async function (response) {
           // 2️⃣ Update transaction status
-          const res = await api.post(
-            "/purchase/updatetransactionstatus",
+          const res = await axios.post(
+            `${BASE_URL}/purchase/updatetransactionstatus`,
             {
               order_id: data.order.id,
               payment_id: response.razorpay_payment_id,

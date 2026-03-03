@@ -1,5 +1,6 @@
+import axios from "axios";
 import { useState } from "react";
-import api from "../services/api";
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 export default function Leaderboard() {
   const [users, setUsers] = useState([]);
@@ -11,7 +12,7 @@ export default function Leaderboard() {
       setLoading(true);
       const token = localStorage.getItem("token");
 
-      const { data } = await api.get("/premium/showLeaderBoard", {
+      const { data } = await axios.get(`${BASE_URL}/premium/showLeaderBoard`, {
         headers: { Authorization: token },
       });
 

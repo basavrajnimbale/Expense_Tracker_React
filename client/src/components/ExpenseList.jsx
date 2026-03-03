@@ -1,11 +1,12 @@
-import api from "../services/api";
+import axios from "axios";
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 export default function ExpenseList({ expenses, onExpenseDeleted }) {
   async function handleDelete(id) {
     try {
       const token = localStorage.getItem("token");
 
-      await api.delete(`/expense/delete-expense/${id}`, {
+      await axios.delete(`${BASE_URL}/expense/delete-expense/${id}`, {
         headers: { Authorization: token },
       });
 

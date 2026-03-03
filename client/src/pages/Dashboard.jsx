@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import api from "../services/api";
-
 import ExpenseForm from "../components/ExpenseForm";
 import ExpenseList from "../components/ExpenseList";
 import Pagination from "../components/Pagination";
 import PremiumSection from "../components/PremiumSection";
+import axios from "axios";
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 export default function Dashboard() {
   const [expenses, setExpenses] = useState([]);
@@ -27,8 +27,8 @@ export default function Dashboard() {
     try {
       const token = localStorage.getItem("token");
 
-      const { data } = await api.get(
-        `/expense/get-expenses?page=${pageNumber}&number=${pageLimit}`,
+      const { data } = await axios.get(
+        `${BASE_URL}/expense/get-expenses?page=${pageNumber}&number=${pageLimit}`,
         {
           headers: { Authorization: token },
         }

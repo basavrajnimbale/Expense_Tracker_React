@@ -1,6 +1,8 @@
+import axios from "axios";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import api from "../services/api.js";
+const BASE_URL = import.meta.env.VITE_API_URL;
+console.log("API URL:", BASE_URL);
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -19,7 +21,7 @@ export default function Signup() {
     e.preventDefault();
     try {
         console.log({formData});
-      const response = await api.post("/user/signup", formData);
+      const response = await axios.post(`${BASE_URL}/user/signup`, formData);
       console.log(response.data);
       navigate("/login");
     } catch (err) {

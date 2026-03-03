@@ -1,5 +1,6 @@
+import axios from "axios";
 import { useState } from "react";
-import api from "../services/api";
+const BASE_URL = import.meta.env.VITE_API_URL;
 import { Link } from "react-router-dom";
 
 export default function ForgotPassword() {
@@ -21,7 +22,7 @@ export default function ForgotPassword() {
     try {
       setLoading(true);
 
-      const res = await api.post("/password/forgot-password", { email });
+      const res = await axios.post(`${BASE_URL}/password/forgot-password`, { email });
 
       setMessage(res.data.message || "Password reset link sent to your email");
       setEmail("");

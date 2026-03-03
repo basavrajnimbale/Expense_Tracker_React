@@ -1,5 +1,6 @@
+import axios from "axios";
 import { useState } from "react";
-import api from "../services/api";
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 export default function DownloadList() {
   const [files, setFiles] = useState([]);
@@ -10,7 +11,7 @@ export default function DownloadList() {
       setLoading(true);
       const token = localStorage.getItem("token");
 
-      const { data } = await api.get("/expense/download", { headers: { Authorization: token }, });
+      const { data } = await axios.get(`${BASE_URL}/expense/download`, { headers: { Authorization: token }, });
       // Add new file to list
       setFiles((prev) => [
         { url: data.fileURL, name: data.filename },

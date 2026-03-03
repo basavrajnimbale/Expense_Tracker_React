@@ -1,5 +1,6 @@
+import axios from "axios";
 import { useState } from "react";
-import api from "../services/api";
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 export default function ExpenseForm({ onExpenseAdded }) {
     const [form, setForm] = useState({
@@ -25,8 +26,8 @@ export default function ExpenseForm({ onExpenseAdded }) {
             let token = localStorage.getItem("token")
             console.log("Token:", token);
 
-            const { data } = await api.post(
-                "/expense/add-expense",
+            const { data } = await axios.post(
+                `${BASE_URL}/expense/add-expense`,
                 form,
                 {
                     headers: { Authorization: token },
